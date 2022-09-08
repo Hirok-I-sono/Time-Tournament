@@ -1,21 +1,34 @@
 @extends('layouts.layout')
 @section('content')
 編集画面の作成
-recors.idが見つからないというエラー表示がおこる、後回し
-<?php var_dump($allrecord); ?>
+バインディングでの編集できた、入力保持をする<br>
+バリデーション出てる
+<?php //var_dump($allrecord); ?>
 <main class="py-4">
     <div class="col-md-5 mx-auto">
         <div class="card">
             <div class="card-header">
                 <h4 class='text-center'>編集</h4>
             </div>
-            <div class="card-body">
+
+                <div class="panel-body">
+                    @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $message)
+                            <li>{{$message}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+            
                 <div class="card-body">
-                    <form action="{{route('update',['id' => $allrecord[0]['id']])}}" method="post">
+                    <form action="{{ route('update',$allrecord) }}" method="post">
                         @csrf
                         <!-- 日付 -->
                         <label for='date' class='mt-2'>日付</label>
-                            <input type='date' class='form-control' name='date' id='date'/>
+                            <input type='date' class='form-control' name='date' id='date' value="" />
 
                         <!-- 選手 -->
                         <label for='player' class='mt-2'>選手</label>
@@ -65,7 +78,7 @@ recors.idが見つからないというエラー表示がおこる、後回し
                         </div> 
                     </form>
                 </div>
-            </div>
+
         </div>
     </div>
 </main>

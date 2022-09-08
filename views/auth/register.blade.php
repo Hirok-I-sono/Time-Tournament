@@ -1,28 +1,35 @@
 @extends('layouts.layout')
 
 @section('content')
+謎の透明バリデーション、エラー文関係のphp全削除したが反映してしまう
   <div class="container">
     <div class="row justify-content-center">
       <div class="col col-md-offset-3 col-md-6">
         <nav class="card mt-5">
           <div class="card-header">会員登録</div>
           <div class="card-body">
-            @if($errors->any())
-              <div class="alert alert-danger">
-                @foreach($errors->all() as $message)
-                  <p>{{ $message }}</p>
-                @endforeach
-              </div>
-            @endif
+
+                        <div class="panel-body">
+                            @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach($errors->all() as $message)
+                                    <li>{{ $message }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                        </div>
+            
             <form action="{{ route('register') }}" method="POST">
               @csrf
               <div class="form-group">
                 <label for="email">メールアドレス</label>
-                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" />
+                <input type="text" class="form-control" id="email" name="email" value="" />
               </div>
               <div class="form-group">
                 <label for="name">ユーザー名</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" />
+                <input type="text" class="form-control" id="name" name="name" value="" />
               </div>
               <div class="form-group">
                 <label for="password">パスワード</label>

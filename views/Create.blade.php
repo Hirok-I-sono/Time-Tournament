@@ -1,6 +1,8 @@
 @extends('layouts.layout')
 @section('content')
-選手追加はできた(ユーザーごともOK)
+選手追加はできた(何番のユーザーidで登録したかもOK)<br>
+プルダウン欄の入力保持（選手、場所、大会名、種目）<br>
+バリデーション（Create.bladeのみ）
 <main class="py-4">
         <div class="col-md-5 mx-auto">
             <div class="card">
@@ -30,7 +32,7 @@
 
                             <!-- 選手 -->
                             <label for='player' class='mt-2'>選手</label>
-                            <select name='player_id' class='form-control'>
+                            <select name='player_id' class='form-control' value="{{ old('player_id') }}">
                                 <option value='' hidden>選手</option>
                                 @foreach($players as $player)
                                 <option value="{{ $player['playerid']}}">{{ $player['playername'] }}</option>
@@ -71,7 +73,7 @@
 
                             <!-- メモ、写真アップロード -->
                             <label for='memo' class='mt-2'>メモ</label>
-                                <textarea class='form-control' name='memo' value="{{ old('memo') }}"></textarea>
+                                <textarea class='form-control' name='memo' value="">{{ old('memo') }}</textarea>
                             <div class='row justify-content-center'>
                                 <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>
                             </div> 

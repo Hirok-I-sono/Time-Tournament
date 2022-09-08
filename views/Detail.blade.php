@@ -1,5 +1,7 @@
 @extends('layouts.layout')
 @section('content')
+モデルバインディングでの詳細表示はOK<br>
+モデルバインディングでの物理、論理削除OK
 <main>
     <div class="container py-4">
         <div class="card">
@@ -18,15 +20,15 @@
             
             <!-- ここに詳細表示 -->
             <tbody>
-            <?php var_dump($allrecord[0]); ?>
+            <?php //var_dump($allrecord[0]); ?>
                 <tr>
-                    <th scope="col">{{ $allrecord[0]['date']}}</th>
-                    <th scope="col">{{ $allrecord[0]['playername']}}</th>
-                    <th scope="col">{{ $allrecord[0]['tourname']}}</th>
-                    <th scope="col">{{ $allrecord[0]['placename']}}</th>
-                    <th scope="col">{{ $allrecord[0]['eventname']}}</th>
-                    <th scope="col">{{ $allrecord[0]['result']}}</th>
-                    <th scope="col">{{ $allrecord[0]['memo']}}</th>
+                    <th scope="col">{{ $allrecord['date']}}</th>
+                    <th scope="col">{{ $player[0]['playername']}}</th>
+                    <th scope="col">{{ $tournament[0]['tourname']}}</th>
+                    <th scope="col">{{ $place[0]['placename']}}</th>
+                    <th scope="col">{{ $event[0]['eventname']}}</th>
+                    <th scope="col">{{ $allrecord['result']}}</th>
+                    <th scope="col">{{ $allrecord['memo']}}</th>
                 </tr>
             </tbody>
         </table>
@@ -34,15 +36,15 @@
         <!-- ここに編集、削除ボタン（管理者は編集、削除、完全削除 -->
         ここに編集削除完全削除
         <div class="d-flex justify-content-center mt-3">
-            <a href="{{route('update',['id' => $allrecord[0]['id']])}}">
+            <a href="{{ route('update',$allrecord) }}">
                 updateとupdateしたいid
                 <button class="btn btn-primary">編集</button>
             </a>
-            <a href="{{route('delete',['id' => $allrecord[0]['id']])}}">
+            <a href="{{ route('delete',$allrecord) }}">
                 削除したいid
                 <button class="btn btn-danger">完全削除</button>
             </a>
-            <a href="{{route('delete.destroy',['id' => $allrecord[0]['id']])}}">
+            <a href="{{ route('delete.destroy',$allrecord) }}">
                 論理削除したいid（管理者のみの表示）
                 <button class="btn btn-warning">論理削除</button>
             </a>
