@@ -14,8 +14,9 @@
             </a>
         </div>
         新規登録（登録できた）、管理者ページ（ロール１）<br>
-        カテゴリの追加<br>
-        今やること→編集
+        カテゴリの追加→追加できた<br>
+        今やること→編集できた、完全削除→できた、論理→1になった<br>
+        ユーザーログインOK、どのユーザーidで登録したかOK
         <div class="card">
         <!-- ここに記録一覧の表示 -->
         <table class='table'>
@@ -33,7 +34,7 @@
         <div class="col">
         @foreach($allrecords as $allrecord)
             <tr>
-                <th scope='col'><a href="{{ route ('result.detail',['id' => $allrecord['record_id']]) }}">#</a></th>
+                <th scope='col'><a href="{{ route ('result.detail',['id' => $allrecord['id']]) }}">#</a></th>
                 <th>{{$allrecord['date']}}</th>
                 <th>{{$allrecord['playername']}}</th>
                 <th>{{$allrecord['tourname']}}</th>

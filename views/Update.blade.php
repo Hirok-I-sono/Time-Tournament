@@ -11,7 +11,7 @@ recors.idが見つからないというエラー表示がおこる、後回し
             </div>
             <div class="card-body">
                 <div class="card-body">
-                    <form action="{{route('update',['id' => $allrecord[0]['record_id']])}}" method="post">
+                    <form action="{{route('update',['id' => $allrecord[0]['id']])}}" method="post">
                         @csrf
                         <!-- 日付 -->
                         <label for='date' class='mt-2'>日付</label>
@@ -22,7 +22,7 @@ recors.idが見つからないというエラー表示がおこる、後回し
                         <select name='player_id' class='form-control'>
                             <option value='' hidden>選手</option>
                             @foreach($players as $player)
-                            <option value="{{ $player['id']}}">{{ $player['playername'] }}</option>
+                            <option value="{{ $player['playerid']}}">{{ $player['playername'] }}</option>
                             @endforeach
                         </select>
 
@@ -31,7 +31,7 @@ recors.idが見つからないというエラー表示がおこる、後回し
                         <select name='place_id' class='form-control'>
                         <option value='' hidden>場所</option>
                             @foreach($places as $place)
-                            <option value="{{ $place['id']}}">{{ $place['placename'] }}</option>
+                            <option value="{{ $place['placeid']}}">{{ $place['placename'] }}</option>
                             @endforeach
                         </select>
 
@@ -40,7 +40,7 @@ recors.idが見つからないというエラー表示がおこる、後回し
                         <select name='tournament_id' class='form-control'>
                         <option value='' hidden>大会名</option>
                             @foreach($tournaments as $tournament)
-                            <option value="{{ $tournament['id']}}">{{ $tournament['tourname'] }}</option>
+                            <option value="{{ $tournament['tourid']}}">{{ $tournament['tourname'] }}</option>
                             @endforeach
                         </select>
 
@@ -49,7 +49,7 @@ recors.idが見つからないというエラー表示がおこる、後回し
                         <select name='event_id' class='form-control'>
                         <option value='' hidden>種目</option>
                             @foreach($events as $event)
-                            <option value="{{ $event['id']}}">{{ $event['eventname'] }}</option>
+                            <option value="{{ $event['eventid']}}">{{ $event['eventname'] }}</option>
                             @endforeach
                         </select>
                             
