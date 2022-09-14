@@ -7,7 +7,7 @@
         <div class="col-md-5 mx-auto">
             <div class="card">
                 <div class="card-header">
-                    <h4 class='text-center'>新規登録</h1>
+                    <h1 class='text-center'>新規登録</h1>
                 </div>
 
                     <div class="card-body">

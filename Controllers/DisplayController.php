@@ -90,10 +90,4 @@ class DisplayController extends Controller
         ]);
     }
 
-    public function Admin(){
-
-        return view('Admin',[
-
-        ]);
-    }
 }
