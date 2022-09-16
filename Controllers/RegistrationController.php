@@ -42,6 +42,11 @@ class RegistrationController extends Controller
         $record->event_id = $request->event_id;
         $record->result = $request->result;
         $record->memo = $request->memo;
+        if(request('image')){
+            $name=request()->file('image')->getClientOriginalName();
+            $file=request()->file('image')->move('storage/images',$name);
+        }
+        
 
         Auth::user()->record()->save($record);
 

@@ -2,7 +2,7 @@
 @section('content')
 選手追加はできた(何番のユーザーidで登録したかもOK)<br>
 プルダウン欄の入力保持（選手、場所、大会名、種目）<br>
-バリデーション（Create.bladeのみ）
+バリデーション（Create.bladeのみ）<br>
 <main class="py-4">
         <div class="col-md-5 mx-auto">
             <div class="card">
@@ -24,7 +24,7 @@
                         @endif
                     </div>
 
-                        <form action="{{ route('result.create')}}" method="post">
+                        <form action="{{ route('result.create')}}" method="post" enctype="multipart/form-data" >
                             @csrf
                             <!-- 日付 -->
                             <label for='date' class='mt-2'>日付</label>
@@ -72,7 +72,8 @@
                                 <input type='text' class='form-control' name='result' value="{{ old('result') }}"/>
 
                             <!-- メモ、写真アップロード -->
-                            <label for='memo' class='mt-2'>メモ</label>
+                            <label for='memo' class='mt-2'>メモ　ここに画像を取り込む（enctype）</label>
+                            <input type="file" class="form-control-file" name='image' id="image">
                                 <textarea class='form-control' name='memo' value="">{{ old('memo') }}</textarea>
                             <div class='row justify-content-center'>
                                 <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>

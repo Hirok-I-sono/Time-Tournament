@@ -90,4 +90,7 @@ class DisplayController extends Controller
         ]);
     }
 
+    public function Reset(){
+        return view('mail/passwordreset');
+    }
 }
