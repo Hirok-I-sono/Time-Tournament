@@ -57,31 +57,40 @@ class DisplayController extends Controller
         ]);
     }
 
-    public function Detail(int $resultid){
+    public function Detail(Record $record){
         // $recording = new Record;
         // $allrecording = $recording->join('players','records.player_id','players.id')
         // ->join('places','records.place_id','places.id')
         // ->join('events','records.event_id','events.id')
         // ->join('tournaments','records.tournament_id','tournaments.id')->get()->toArray();
 
-        $recording = Record::where('id',$resultid)
-        ->join('players','records.player_id','players.playerid')
-        ->join('places','records.place_id','places.placeid')
-        ->join('events','records.event_id','events.eventid')
-        ->join('tournaments','records.tournament_id','tournaments.tourid')->get()->toarray();
+        // $recording = Record::where('id',$record)
+        // ->join('players','records.player_id','players.playerid')
+        // ->join('places','records.place_id','places.placeid')
+        // ->join('events','records.event_id','events.eventid')
+        // ->join('tournaments','records.tournament_id','tournaments.tourid')->get()->toarray();
 
-        var_dump($recording);
-        //var_dump($resultid);
+        var_dump($record);
+        //モデルバインディング各テーブルの〇〇idと照らし合わせ（date,player,place,tournament,event,result,memo）
+        $player = Player::where('playerid',$record['player_id'])->get()->toArray();
+        var_dump($player);
+        $place = Place::where('placeid',$record['place_id'])->get()->toArray();
+        var_dump($place);
+        $tournament = Tournament::where('tourid',$record['tournament_id'])->get()->toArray();
+        var_dump($tournament);
+        $event = Event::where('eventid',$record['event_id'])->get()->toArray();
+        var_dump($event);
 
         return view('Detail',[
-            'allrecord' => $recording,
+            'allrecord' => $record,
+            'player' => $player,
+            'place' => $place,
+            'tournament' => $tournament,
+            'event' => $event
         ]);
     }
 
-    public function Admin(){
-
-        return view('Admin',[
-
-        ]);
+    public function Reset(){
+        return view('mail/passwordreset');
     }
 }
