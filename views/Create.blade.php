@@ -3,6 +3,7 @@
 選手追加はできた(何番のユーザーidで登録したかもOK)<br>
 プルダウン欄の入力保持（選手、場所、大会名、種目）<br>
 バリデーション（Create.bladeのみ）<br>
+画像アップロード（public/storage上には飛んできてる）→ちゃんと飛びました、DBにも入りました
 <main class="py-4">
         <div class="col-md-5 mx-auto">
             <div class="card">
@@ -72,7 +73,7 @@
                                 <input type='text' class='form-control' name='result' value="{{ old('result') }}"/>
 
                             <!-- メモ、写真アップロード -->
-                            <label for='memo' class='mt-2'>メモ　ここに画像を取り込む（enctype）</label>
+                            <label for='memo' class='mt-2'>メモ、画像</label>
                             <input type="file" class="form-control-file" name='image' id="image">
                                 <textarea class='form-control' name='memo' value="">{{ old('memo') }}</textarea>
                             <div class='row justify-content-center'>

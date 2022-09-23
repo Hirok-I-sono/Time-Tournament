@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Record extends Model
 {
-    protected $fillable = ['date','player_id','place_id','tournament_id','event_id','result','memo'];
+    protected $fillable = ['date','player_id','place_id','tournament_id','event_id','result','memo','image'];
 
     public function player(){
         return $this->belongsTo('App\Player','player_id','playerid');

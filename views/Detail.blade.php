@@ -32,6 +32,9 @@
                 </tr>
             </tbody>
         </table>
+
+        <img src="{{ '/storage/' . $allrecord['image']}}" class='w-30 mb-3'/>
+
         </div>
         <!-- ここに編集、削除ボタン（管理者は編集、削除、完全削除 -->
         ここに編集削除完全削除

@@ -24,7 +24,7 @@
                 </div>
             
                 <div class="card-body">
-                    <form action="{{ route('update',$allrecord) }}" method="post">
+                    <form action="{{ route('update',$allrecord) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <!-- 日付 -->
                         <label for='date' class='mt-2'>日付</label>
@@ -71,7 +71,8 @@
                             <input type='text' class='form-control' name='result'/>
 
                         <!-- メモ、写真アップロード -->
-                        <label for='memo' class='mt-2'>メモ</label>
+                        <label for='memo' class='mt-2'>メモ、写真</label>
+                        <input type="file" class="form-control-file" name='image' id="image">
                             <textarea class='form-control' name='memo'></textarea>
                         <div class='row justify-content-center'>
                             <button type='submit' class='btn btn-primary w-25 mt-3'>変更</button>
