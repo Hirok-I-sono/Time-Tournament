@@ -37,7 +37,10 @@ class DisplayController extends Controller
         ->join('places','records.place_id','places.placeid')
         ->join('events','records.event_id','events.eventid')
         ->join('tournaments','records.tournament_id','tournaments.tourid')->get()->toArray();
-        var_dump($allrecording);
+        //var_dump($allrecording);
+
+        //$allrecording = Record::orderby('id','DESC')->paginate(10);
+        
         // $places = $recording->join('places','records.place_id','places.id')->get()->toArray();
         // var_dump($places);
         // $events = $recording->join('events','records.event_id','events.id')->get()->toArray();
@@ -93,4 +96,61 @@ class DisplayController extends Controller
     public function Reset(){
         return view('mail/passwordreset');
     }
+
+    //検索機能
+    // public function Serched(){
+    //     return view('/serch',[]);
+    // }
+
+    public function Serch(Request $request){//検索で引っ張ってきたワード
+
+        // $user = Auth::user()->id;
+        // //var_dump($user);
+        // //var_dump($request);
+        
+        // $recording = new Record;
+        // $allrecording = Auth::user()->record()->get();
+        // $allrecording = $recording->where('del_flg','0')->where('records.user_id',$user)
+        // ->join('players','records.player_id','players.playerid')
+        // ->join('places','records.place_id','places.placeid')
+        // ->join('events','records.event_id','events.eventid')
+        // ->join('tournaments','records.tournament_id','tournaments.tourid')->get()->toArray();
+
+        // $keyword = $request;
+    
+        //     $query = $recording()->join('players','records.player_id','players.playerid')
+        //     ->join('places','records.place_id','places.placeid')
+        //     ->join('events','records.event_id','events.eventid')
+        //     ->join('tournaments','records.tournament_id','tournaments.tourid');
+        //     $serchrecord = $query->where('name','like', '%' .$keyword. '%')->get();//name検索
+        //     $message = "「". $keyword."」を含む検索が完了しました。";
+        //     dd($query);
+        // return view('/serch',[
+        //     'serchrecords' => $serchrecord,
+        //     'message' => $message,
+        //     ]);
+
+        $query = Record::query()->join('players','records.player_id','players.playerid')
+        ->join('places','records.place_id','places.placeid')
+        ->join('events','records.event_id','events.eventid')
+        ->join('tournaments','records.tournament_id','tournaments.tourid');
+
+        $search = $request->all();
+        //dd($search['name']);
+        if ($request->has('name') && $search != '') {//各テーブルと連結が必要かも
+            $query->where(DB::raw("CONCAT(playername,' ',tourname,' ',eventname,' ',date,' ',memo)"),'like','%'.$search['name'].'%');
+        }
+        $data = $query->paginate(20);
+        var_dump($search);
+        //var_dump($query);
+        return view('serch',[
+            'data' => $data
+        ]);
+    }
 }
+
+
+// else{
+//     $message = "検索結果はありません。";
+//     return view('/serch')->with('message',$message);
+// }

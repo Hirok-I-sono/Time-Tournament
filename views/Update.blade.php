@@ -24,7 +24,7 @@
                 </div>
             
                 <div class="card-body">
-                    <form action="{{ route('update',$allrecord) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('result.update',$allrecord) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <!-- 日付 -->
                         <label for='date' class='mt-2'>日付</label>

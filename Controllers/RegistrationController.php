@@ -42,11 +42,29 @@ class RegistrationController extends Controller
         $record->event_id = $request->event_id;
         $record->result = $request->result;
         $record->memo = $request->memo;
-        if(request('image')){
-            $name=request()->file('image')->getClientOriginalName();
-            $file=request()->file('image')->move('storage/images',$name);
-        }
-        
+
+        //写真アップロードのコード
+        // $image = $request->file('image');
+        // // dd($image);
+        // // 画像がアップロードされていれば、storageに保存
+        // if($request->hasFile('image')){
+        //     $path = \Storage::put('/public', $image);
+        //     $path = explode('/', $path);
+        //     $record['image'] = $request['path'];
+        // }else{
+        //     $path = null;
+        // }
+        // //dd($path);
+        // dd($request);
+
+        // アップロードされたファイルの取得
+        $image = $request->file('image');
+        // ファイルの保存とパスの取得
+        $path = isset($image) ? $image->store('images', 'public') : '';
+        //dd($path);
+        $record->image = $path;
+        // dd($record);
+
 
         Auth::user()->record()->save($record);
 
@@ -55,9 +73,7 @@ class RegistrationController extends Controller
 
     public function CreatePlayer(){
         
-        return view('PlayerCreate',[
-
-        ]);
+        return view('PlayerCreate',[]);
     }
 
     public function PlayerCreate(CreateError $request){

@@ -44,7 +44,7 @@ class UpdateController extends Controller
 
     public function UpdatePost(Record $record,CreateData $request){
 
-        $columns = ['date','player_id','place_id','event_id','result','memo'];
+        $columns = ['date','player_id','place_id','event_id','result','memo','image'];
         foreach($columns as $column){
             $record->$column = $request->$column;
         }
@@ -59,6 +59,10 @@ class UpdateController extends Controller
         // $record->event_id = $request->event_id;
         // $record->result = $request->result;
         // $record->memo = $request->memo;
+
+        $image = $request->file('image');
+        $path = isset($image) ? $image->store('images', 'public') : '';
+        $record->image = $path;
 
         $record->save();
 

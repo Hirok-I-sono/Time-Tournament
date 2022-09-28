@@ -39,7 +39,7 @@
         <!-- ここに編集、削除ボタン（管理者は編集、削除、完全削除 -->
         ここに編集削除完全削除
         <div class="d-flex justify-content-center mt-3">
-            <a href="{{ route('update',$allrecord) }}">
+            <a href="{{ route('result.update',$allrecord) }}">
                 <button class="btn btn-primary">編集</button>
             </a>
             <a href="{{ route('delete',$allrecord) }}">
