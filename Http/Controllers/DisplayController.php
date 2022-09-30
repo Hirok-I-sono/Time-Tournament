@@ -38,6 +38,8 @@ class DisplayController extends Controller
         ->join('events','records.event_id','events.eventid')
         ->join('tournaments','records.tournament_id','tournaments.tourid')->get()->toArray();
         //var_dump($allrecording);
+
+        //$allrecording = Record::orderby('id','DESC')->paginate(10);
         
         // $places = $recording->join('places','records.place_id','places.id')->get()->toArray();
         // var_dump($places);

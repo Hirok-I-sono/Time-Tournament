@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function Admin(){
+    public function Admin(){//管理者トップ
 
         $admin = new User;
         //var_dump($admin);
-        $data = $admin->get()->toArray();
-        var_dump($data);
+        $data = $admin->paginate(10);
+        //var_dump($data);
 
         return view('Admin',[//ユーザー編集ページに飛ぶには$data（foreachで$datasから$dataにしてる）の中のidカラムを引っ張る必要がある
             'datas' => $data
@@ -30,7 +30,7 @@ class AdminController extends Controller
     //ユーザーの編集入力ページ
     public function AdminDataEdit(User $user){//usersテーブルは'id'で登録してるからfind使える
 
-        var_dump($user);
+        //var_dump($user);
 
         return view('AdminEdit',[
             'data' => $user
@@ -62,7 +62,7 @@ class AdminController extends Controller
 
         $eve = new Event;
         $event = $eve->get()->toArray();
-        var_dump($event);
+        //var_dump($event);
 
         return view('EventEdit',[
             'events' => $event
@@ -162,4 +162,31 @@ class AdminController extends Controller
 
         return redirect('/admin/event');
     }
+
+    //ユーザー検索
+    public function SerchUser(Request $request){
+
+        $query = User::query();
+        $search = $request->input('name');
+        if ($request->has('name') && $search != '') {//各テーブルと連結が必要かも
+            $query->where('name', 'like', '%'.$search.'%')->get();
+        }
+        $data = $query->paginate(10);
+        //var_dump($data);
+
+        return view('serchUser',[
+            'datas' => $data
+        ]);
+    }
+    // public function Admin(){
+
+    //     $admin = new User;
+    //     //var_dump($admin);
+    //     $data = $admin->get()->toArray();
+    //     var_dump($data);
+
+    //     return view('Admin',[//ユーザー編集ページに飛ぶには$data（foreachで$datasから$dataにしてる）の中のidカラムを引っ張る必要がある
+    //         'datas' => $data
+    //     ]);
+    // }
 }
