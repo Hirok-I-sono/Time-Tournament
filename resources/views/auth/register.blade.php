@@ -1,7 +1,6 @@
 @extends('layouts.layout')
 
 @section('content')
-謎の透明バリデーション、エラー文関係のphp全削除したが反映してしまう
   <div class="container">
     <div class="row justify-content-center">
       <div class="col col-md-offset-3 col-md-6">

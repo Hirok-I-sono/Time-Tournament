@@ -31,7 +31,7 @@
           </div>
         </nav>
         <div class="text-center">
-          <a href="{{ route('password.request') }}">パスワードの変更はこちらから</a>
+          <a href="{{ route('password_reset.email.form') }}">パスワードをお忘れの方</a>
         </div>
       </div>
     </div>

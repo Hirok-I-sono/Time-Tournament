@@ -1,8 +1,7 @@
 @extends('layouts.layout')
 @section('content')
-編集画面の作成
-recors.idが見つからないというエラー表示がおこる、後回し
-<?php var_dump($allrecord); ?>
+
+<?php //var_dump($allrecord); ?>
 <main class="py-4">
     <div class="col-md-5 mx-auto">
         <div class="card">
@@ -23,11 +22,11 @@ recors.idが見つからないというエラー表示がおこる、後回し
                 </div>
             
                 <div class="card-body">
-                    <form action="{{route('update',['id' => $allrecord[0]['id']])}}" method="post">
+                    <form action="{{ route('result.update',$allrecord) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <!-- 日付 -->
                         <label for='date' class='mt-2'>日付</label>
-                            <input type='date' class='form-control' name='date' id='date'/>
+                            <input type='date' class='form-control' name='date' id='date' value="" />
 
                         <!-- 選手 -->
                         <label for='player' class='mt-2'>選手</label>
@@ -70,7 +69,8 @@ recors.idが見つからないというエラー表示がおこる、後回し
                             <input type='text' class='form-control' name='result'/>
 
                         <!-- メモ、写真アップロード -->
-                        <label for='memo' class='mt-2'>メモ</label>
+                        <label for='memo' class='mt-2'>メモ、写真</label>
+                        <input type="file" class="form-control-file" name='image' id="image">
                             <textarea class='form-control' name='memo'></textarea>
                         <div class='row justify-content-center'>
                             <button type='submit' class='btn btn-primary w-25 mt-3'>変更</button>

@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-ユーザーidごとでの登録OK
+
 <main class="py-4">
     <div class="col-md-5 mx-auto">
         <div class="card">
@@ -9,7 +9,7 @@
             </div>
             <div class="card-body">
 
-                <!-- <div class="panel-body">
+                <div class="panel-body">
                     @if($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -19,12 +19,12 @@
                         </ul>
                     </div>
                     @endif
-                </div> -->
+                </div>
 
                 <form action="{{ route('player.create')}}" method="post">
                 @csrf
                     <label for='playername' class='mt-2'>選手名</label>
-                    <textarea class='form-control' name='playername' value=""></textarea>
+                    <textarea class='form-control' name='playername' value="">{{ old('playername') }}</textarea>
                     <div class='row justify-content-center'>
                         <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>
                     </div> 
