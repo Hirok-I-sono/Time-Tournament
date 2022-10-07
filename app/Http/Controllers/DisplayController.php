@@ -8,6 +8,7 @@ use App\Player;
 use App\Place;
 use App\Event;
 use App\Tournament;
+use App\User;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,8 @@ class DisplayController extends Controller
         ->join('events','records.event_id','events.eventid')
         ->join('tournaments','records.tournament_id','tournaments.tourid')->get()->toArray();
         //var_dump($allrecording);
+
+        //$allrecording = Record::orderby('id','DESC')->paginate(10);
         
         // $places = $recording->join('places','records.place_id','places.id')->get()->toArray();
         // var_dump($places);
@@ -133,6 +136,10 @@ class DisplayController extends Controller
         ->join('events','records.event_id','events.eventid')
         ->join('tournaments','records.tournament_id','tournaments.tourid');
 
+        $user = Auth::user()->id;
+        $role = new User;
+        $token = $role->where('id',$user)->get()->toArray();
+
         $search = $request->all();
         //dd($search['name']);
         if ($request->has('name') && $search != '') {//各テーブルと連結が必要かも
@@ -142,7 +149,8 @@ class DisplayController extends Controller
         var_dump($search);
         //var_dump($query);
         return view('serch',[
-            'data' => $data
+            'data' => $data,
+            'role' => $token
         ]);
     }
 }

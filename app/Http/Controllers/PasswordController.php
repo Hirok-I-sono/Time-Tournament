@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Record;
+use App\Player;
+use App\Place;
+use App\Event;
+use App\Tournament;
+use App\User;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Http\Request;
+use App\Http\Requests\CreateData;
+use App\Http\Requests\CreateError;
 use Illuminate\Support\Facades\Auth;
 use ResetsPasswords;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -14,6 +22,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\URL;
+use App\Http\Requests\ResetPasswordRequest;
 
 class PasswordController extends Controller
 {
@@ -21,6 +31,8 @@ class PasswordController extends Controller
     private $userTokenRepository;
 
     private const MAIL_SENDED_SESSION_KEY = 'user_reset_password_mail_sended_action';
+    private const UPDATE_PASSWORD_SESSION_KEY = 'user_update_password_action';
+
 
     public function __construct(
         UserRepositoryInterface $userRepository,
@@ -57,12 +69,16 @@ class PasswordController extends Controller
         
         // 48時間後を期限
         $now = Carbon::now();
-        $expireAt = $now->addHours(48)->format('Y-m-d H:00:00');
+        $expireAt = $now->addHours(48);
 
         DB::table('user_tokens')->where('user_id',$user->id)->update(['token'=>$userToken->token,'expire_at'=>$expireAt,'updated_at'=>$now]);
     
         // メール送信完了画面への不正アクセスを防ぐためのセッションキー
         session()->put(self::MAIL_SENDED_SESSION_KEY, 'user_reset_password_send_email');
+
+        //var_dump($request);
+        //var_dump($user);
+        //var_dump($userToken);
 
         return view('send_complete');
     }
@@ -83,12 +99,6 @@ class PasswordController extends Controller
         return view('send_complete');
     }
 
-    /**
-    * ユーザーのパスワード再設定フォーム画面
-    *
-    * @param Request $request
-    * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
-    */
     public function edit(Request $request)
     {
         if (!$request->hasValidSignature()) {
@@ -105,5 +115,46 @@ class PasswordController extends Controller
 
         return view('passChange')
             ->with('userToken', $userToken);
+    }
+
+    ##ここから追加##
+    /**
+    * パスワード更新処理
+    *
+    * @param ResetPasswordRequest $request
+    * @return \Illuminate\Http\RedirectResponse
+    */
+    public function update(ResetPasswordRequest $request)
+    {
+        try {
+            $userToken = $this->userTokenRepository->getUserTokenfromToken($request->reset_token);
+            $this->userRepository->updateUserPassword($request->password, $userToken->user_id);
+            Log::info(__METHOD__ . '...ID:' . $userToken->user_id . 'のユーザーのパスワードを更新しました。');
+        } catch (Exception $e) {
+            Log::error(__METHOD__ . '...ユーザーのパスワードの更新に失敗しました。...error_message = ' . $e);
+            return redirect()->route('password_reset.email_form')
+                ->with('flash_message', __('処理に失敗しました。時間をおいて再度お試しください。'));
+        }
+        // パスワードリセット完了画面への不正アクセスを防ぐためのセッションキー
+        $request->session()->put(self::UPDATE_PASSWORD_SESSION_KEY, 'user_update_password');
+
+        return redirect()->route('password_reset.edited');
+    }
+
+    /**
+    * パスワードリセット完了ページ
+    *
+    * @return \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+    */
+    public function edited()
+    //updateというのが存在しねーよ！と
+    {
+        // パスワード更新処理で保存したセッションキーに値がなければアクセスできないようにすることで不正アクセスを防ぐ
+        if (session()->pull(self::UPDATE_PASSWORD_SESSION_KEY) !== 'user_update_password') {
+            return redirect()->route('password_reset.email.form')
+                ->with('flash_message', '不正なリクエストです。');
+        }
+
+        return view('passComplete');
     }
 }

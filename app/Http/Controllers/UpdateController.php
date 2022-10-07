@@ -30,7 +30,7 @@ class UpdateController extends Controller
         $eventrname = Event::get()->toarray();
         $tourname = Tournament::get()->toarray();
 
-        var_dump($record);
+        //var_dump($record);
         var_dump($user);
 
         return view('Update',[
@@ -83,6 +83,15 @@ class UpdateController extends Controller
         //$record = Record::find($id);
         //var_dump($record);
         $record->del_flg = 1;
+        $record->save();
+
+        return redirect('/');
+    }
+
+    //データ復元（del_flgを1→0にする）
+    public function Backup(Record $record){
+
+        $record->del_flg = 0;
         $record->save();
 
         return redirect('/');

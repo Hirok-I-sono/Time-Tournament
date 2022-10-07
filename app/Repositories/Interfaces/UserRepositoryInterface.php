@@ -3,6 +3,7 @@
 namespace App\Repositories\Interfaces;
 
 use App\User;
+use App\Repositories\Eloquents\UserRepository;
 
 interface UserRepositoryInterface
 {
