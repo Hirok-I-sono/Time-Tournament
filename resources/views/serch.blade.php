@@ -12,7 +12,12 @@
                     <th scope='col'>選手</th>
                     <th scope='col'>大会名</th>
                     <th scope='col'>種目</th>
-                    <th scope='col'>結果</th>
+                    <th scope='col'>記録</th>
+                    @if($role[0]['role'] == 1)
+                    <th scope='col'>削除ステータス</th>
+                    @else
+                    <!-- role=0　何も表示しない -->
+                    @endif
                 </tr>
             </thead>
             <div class="col">
@@ -24,6 +29,15 @@
                     <th>{{$item['tourname']}}</th>
                     <th>{{$item['eventname']}}</th>
                     <th>{{$item['result']}}</th>
+                    @if($role[0]['role'] == 1)
+                        @if($item['del_flg'] == 0)
+                        <th scope='col' class="text-primary">表示中</th>
+                        @else
+                        <th scope='col' class="text-danger">非表示中</th>
+                        @endif
+                    @else
+                    <!-- role=0　何も表示しない -->
+                    @endif
                 </tr>
                 @endforeach
             </div>

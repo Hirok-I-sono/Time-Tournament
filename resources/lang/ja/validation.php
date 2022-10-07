@@ -159,6 +159,9 @@ return [
         'email' => 'メールアドレス',
         'name' => 'ユーザー名',
         'password' => 'パスワード',
+        //管理者
+        'tourname' => '大会名',
+        'eventname' => '種目'
     ],
 
 ];

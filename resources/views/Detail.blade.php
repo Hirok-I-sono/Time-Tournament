@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 @section('content')
+今は辰巳の場所を出してる
 <main>
     <div class="container py-4">
         <div class="card">
@@ -18,7 +19,6 @@
             
             <!-- ここに詳細表示 -->
             <tbody>
-            <?php //var_dump($allrecord[0]); ?>
                 <tr>
                     <th scope="col">{{ $allrecord['date']}}</th>
                     <th scope="col">{{ $player[0]['playername']}}</th>
@@ -36,22 +36,38 @@
         </div>
 
         <!-- ここにマップ -->
-        <a href="google_map" >Google Map</a>
-        <!-- <div id="map" style="height:350px">マップ出てほしい</div>
+        <!-- 各会場を選択した際の場所にピン止めしたい（if文でtouridと照らし合わせて表示したい） -->
+        <div id="map" style="height:350px"></div>
         <script src="{{ asset('/js/map.js') }}"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=[AIzaSyA5j4z75-XO4QdXFVZAmS4tRmEJTD7sx34]&callback=initMap" async defer></script> -->
+        <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyBaUny4XRpZn6j19805-MeXsPpRR9vcDCY&callback=initMap" async defer></script>
 
-        <!-- ここに編集、削除ボタン（管理者は編集、削除、完全削除 -->
+        <!-- ここに編集、削除ボタン（管理者[role1]は編集、削除、完全削除、あと復元 -->
+        <!-- 一般人は編集、論理のみ、管理者は編集、完全削除、論理or復元 -->
         <div class="d-flex justify-content-center mt-3">
             <a href="{{ route('result.update',$allrecord) }}">
                 <button class="btn btn-primary">編集</button>
             </a>
+            @if($role[0]['role'] == 1)
+            <!-- role1編集完全削除論理削除復元 -->
             <a href="{{ route('delete',$allrecord) }}">
                 <button class="btn btn-danger">完全削除</button>
             </a>
+                @if($allrecord['del_flg'] == 0)
+                <a href="{{ route('delete.destroy',$allrecord) }}">
+                    <button class="btn btn-warning">削除</button>
+                </a>
+                @else
+                <!-- 復元（管理者のみの権限[del_flgを1→0にする]） -->
+                <a href="{{ route('backup',$allrecord) }}">
+                    <button class="btn btn-light">データ復元</button>
+                </a>
+                @endif
+            @else
+            <!-- role0 -->
             <a href="{{ route('delete.destroy',$allrecord) }}">
-                <button class="btn btn-warning">論理削除</button>
+                <button class="btn btn-warning">削除</button>
             </a>
+            @endif
         </div>
     </div>
 </main>
