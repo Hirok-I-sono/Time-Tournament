@@ -1,18 +1,20 @@
 @extends('layouts.layout')
 
     @section('content')
+
+    大会の会場の、緯度経度について<br>
+    見た目をもっとオリジナリティに<br>
+    var_dumpを消す<br>
+
     <main>
 
-    <div class="container py-4">
-        <h3>やることリスト<h3><br>
-        google map API←地図表示はOK、各会場で選択した所にピン止めしたい<br>
-        パスリセの細かな修正<br>
-        検索引っ掛からなかった時のエラー（recordsの各種idは引っかからないようにしたい）<br>
+    <div class="container py-3">
         
         @if($role[0]['violation'] == 0)
-        <div class="">
+        <h2>あなたは管理者になります</h2>
+        <div class="mb-4">
             <a href="{{route ('result.create') }}">
-                <button type="button" class="btn btn-primary">新規登録</button>
+                <button type="button" class="btn btn-primary btn-lg">新規登録</button>
             </a>
             @if($role[0]['role'] == 1)
             <a href="{{route ('admin')}}">
@@ -27,18 +29,17 @@
         {{ csrf_field()}}
         {{method_field('get')}}
             <div class="form-group">
-                <h3>検索</h3>
                 <input type="text" class="form-control col-md-4" placeholder="条件入力（フリーワード）" name="name">
-                <button type="submit" class="btn btn-primary col-md-1">検索</button>
+                <button type="submit" class="btn btn-success col-md-1">検索</button>
             </div>
         </form><br>
         
-        <div class="card">
+        <div class="card shadow bg-body rounded">
         <!-- ここに記録一覧の表示 -->
-        <table class='table'>
+        <table class='table table-striped table-hover'>
         <thead>
             <tr>
-                <th scope='col'>詳細</th>
+                <th scope='col'>詳細(ID no.)</th>
                 <th scope='col'>日付</th>
                 <th scope='col'>選手</th>
                 <th scope='col'>大会名</th>
@@ -55,7 +56,7 @@
         <div class="col">
         @foreach($allrecords as $allrecord)
             <tr>
-                <th scope='col'><a href="{{ route ('result.detail',['record' => $allrecord['id']]) }}">#</a></th>
+                <th scope='col'><a href="{{ route ('result.detail',['record' => $allrecord['id']]) }}">{{$allrecord['id']}}</a></th>
                 <th>{{$allrecord['date']}}</th>
                 <th>{{$allrecord['playername']}}</th>
                 <th>{{$allrecord['tourname']}}</th>

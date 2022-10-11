@@ -1,9 +1,9 @@
 @extends('layouts.layout')
 @section('content')
-入力保持したい
+
 <main class="py-4">
-    <div class="col-md-5 mx-auto">
-        <div class="card">
+    <div class="col-md-7 mx-auto">
+        <div class="card shadow mb-3 bg-body rounded">
             <div class="card-header">
                 <h4 class='text-center'>編集</h4>
             </div>
@@ -95,7 +95,7 @@
                         <input type="file" class="form-control-file" name='image' id="image">
                             <textarea class='form-control' name='memo'>{{ $allrecord['memo'] }}</textarea>
                         <div class='row justify-content-center'>
-                            <button type='submit' class='btn btn-primary w-25 mt-3'>変更</button>
+                            <button type='submit' class='btn btn-info w-25 mt-3'>変更</button>
                         </div> 
                     </form>
                 </div>

@@ -4,7 +4,10 @@
 <h4><a href="{{ route ('admin') }}">管理者ページトップへ戻る</a></h4>
     <!--検索ボタンが押された時に表示されます-->
 <h3>検索条件に一致したユーザを表示します</h3>
-        @if(!empty($datas))
+@if(!empty($message))
+<div class="alert alert-primary" role="alert">{{ $message }}</div>
+@endif
+        @if($search != '')
         <table class='table'>
             <thead>
                 <tr>
@@ -42,6 +45,8 @@
             </div>
         </table>
             {{ $datas->appends(request()->input())->render('pagination::bootstrap-4') }}
+        @else
+        <!-- 何も出さない -->
         @endif
 </div>
 @endsection

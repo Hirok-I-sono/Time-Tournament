@@ -29,7 +29,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    TIME or TOURNAMENT RESULT
+                    <h2>TIME or TOURNAMENT RESULT</h2>
                 </a>
             
          

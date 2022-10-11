@@ -3,9 +3,9 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col col-md-offset-3 col-md-6">
+      <div class="col col-md-offset-3 col-md-8">
         <nav class="card mt-5">
-          <div class="card-header">ログイン</div>
+          <div class="card-header text-center"><h2>ログイン</h2></div>
           <div class="card-body">
             @if($errors->any())
               <div class="alert alert-danger">
@@ -24,13 +24,13 @@
                 <label for="password">パスワード</label>
                 <input type="password" class="form-control" id="password" name="password" />
               </div>
-              <div class="text-right">
-                <button type="submit" class="btn btn-primary">送信</button>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">送信</button>
               </div>
             </form>
           </div>
         </nav>
-        <div class="text-center">
+        <div class="text-left">
           <a href="{{ route('password_reset.email.form') }}">パスワードをお忘れの方</a>
         </div>
       </div>

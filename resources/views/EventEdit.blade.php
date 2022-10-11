@@ -7,7 +7,7 @@
 
     <h2>種目編集<h2>
     <div class="card">
-        <table class='table'>
+        <table class='table table-success table-striped'>
             <thead>
                 <tr>
                     <th scope='col'>ID</th>

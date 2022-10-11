@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-今は辰巳の場所を出してる
+
 <main>
     <div class="container py-4">
         <div class="card">
@@ -30,20 +30,50 @@
                 </tr>
             </tbody>
         </table>
+        @if($allrecord['image'] != NULL)
         <h3>画像</h3>
         <img src="{{ '/storage/' . $allrecord['image']}}" class='w-25 p-3'/>
+        @else
+        <h3>画像はありません</h3>
+        @endif
 
         </div>
 
         <!-- ここにマップ -->
-        <!-- 各会場を選択した際の場所にピン止めしたい（if文でtouridと照らし合わせて表示したい） -->
+        @if($place[0]['lat'] != NULL)
         <div id="map" style="height:350px"></div>
-        <script src="{{ asset('/js/map.js') }}"></script>
+        <!-- <script src="{{ asset('/js/map.js') }}"></script> -->
         <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyBaUny4XRpZn6j19805-MeXsPpRR9vcDCY&callback=initMap" async defer></script>
+        <script>//配列をJSON形式に変更する。JSONをパース(解析)して受け取る。
+            function initMap() {
+                // 緯度・経度を変数に格納
+                var lat = JSON.parse('<?php echo json_encode($place[0]['lat']) ?>');
+                var lng = JSON.parse('<?php echo json_encode($place[0]['lng']) ?>');
+                var mapLatLng = new google.maps.LatLng(lat, lng);
+                // マップオプションを変数に格納
+                var mapOptions = {
+                    zoom : 15,          // 拡大倍率
+                    center : mapLatLng  // 緯度・経度
+                };
+                //マップオブジェクト作成
+                var map = new google.maps.Map(
+                    document.getElementById("map"), // マップを表示する要素
+                    mapOptions         // マップオプション
+                );
+                //　マップにマーカーを表示する
+                var marker = new google.maps.Marker({
+                    map : map,             // 対象の地図オブジェクト
+                    position : mapLatLng   // 緯度・経度
+                });
+            }
+        </script>
+        @else
+        <!-- 地図出さない -->
+        @endif 
 
         <!-- ここに編集、削除ボタン（管理者[role1]は編集、削除、完全削除、あと復元 -->
         <!-- 一般人は編集、論理のみ、管理者は編集、完全削除、論理or復元 -->
-        <div class="d-flex justify-content-center mt-3">
+        <div class="d-flex mt-3">
             <a href="{{ route('result.update',$allrecord) }}">
                 <button class="btn btn-primary">編集</button>
             </a>
@@ -55,11 +85,11 @@
                 @if($allrecord['del_flg'] == 0)
                 <a href="{{ route('delete.destroy',$allrecord) }}">
                     <button class="btn btn-warning">削除</button>
-                </a>
+                </a>←削除ステータスを非表示にします（管理者でないユーザーは表示からは消えます）
                 @else
                 <!-- 復元（管理者のみの権限[del_flgを1→0にする]） -->
                 <a href="{{ route('backup',$allrecord) }}">
-                    <button class="btn btn-light">データ復元</button>
+                    <button class="btn btn-outline-dark">データ復元</button>
                 </a>
                 @endif
             @else
@@ -71,4 +101,5 @@
         </div>
     </div>
 </main>
+
 @endsection

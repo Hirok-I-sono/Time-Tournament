@@ -1,13 +1,17 @@
 @extends('layouts.layout')
 @section('content')
 <div class="container"><br>
-    <!--検索ボタンが押された時に表示されます-->
+    
 <h3>検索条件に一致したデータを表示します</h3>
-        @if(!empty($data))
-        <table class='table'>
+<!-- 入力して一致するものが無かった時もエラー出したい -->
+@if(!empty($message))
+<div class="alert alert-primary" role="alert">{{ $message }}</div>
+@endif
+        @if($search['name'] != '')
+        <table class='table table-striped table-hover'>
             <thead>
                 <tr>
-                    <th scope='col'>詳細</th>
+                    <th scope='col'>詳細(ID no.)</th>
                     <th scope='col'>日付</th>
                     <th scope='col'>選手</th>
                     <th scope='col'>大会名</th>
@@ -23,7 +27,7 @@
             <div class="col">
                 @foreach($data as $item)
                 <tr>
-                    <th scope='col'><a href="{{ route ('result.detail',['record' => $item['id']]) }}">#</a></th>
+                    <th scope='col'><a href="{{ route ('result.detail',['record' => $item['id']]) }}">{{$item['id']}}</a></th>
                     <th>{{$item['date']}}</th>
                     <th>{{$item['playername']}}</th>
                     <th>{{$item['tourname']}}</th>
@@ -43,6 +47,8 @@
             </div>
         </table>
             {{ $data->appends(request()->input())->render('pagination::bootstrap-4') }}
+        @else
+        <!-- 何も出さない -->
         @endif
 </div>
 @endsection

@@ -6,27 +6,28 @@
 <div class="container py-4">
     <h2>管理者トップページ</h2>
 
+    <div class="mb-4">
     <a href="{{route ('tour.admin')}}"> 
-        <button type="button" class="btn btn-secondary">大会名編集</button>
+        <button type="button" class="btn btn-secondary btn-lg">大会名編集</button>
     </a>
     <a href="{{route ('event.admin')}}"> 
-        <button type="button" class="btn btn-secondary">種目編集</button>
+        <button type="button" class="btn btn-secondary btn-lg">種目編集</button>
     </a>
+    </div>
     
 
     <form action="{{ route('serch.user')}}" method="post">
         {{ csrf_field()}}
         {{method_field('get')}}
         <div class="form-group">
-            <h4>ユーザー名検索</h4>
             <input type="text" class="form-control col-md-4" placeholder="ユーザー名" name="name">
-            <button type="submit" class="btn btn-primary col-md-1">検索</button>
+            <button type="submit" class="btn btn-success col-md-1">検索</button>
         </div>
     </form>
 
 <div class="card">
     <!-- ここに記録一覧の表示 -->
-    <table class='table'>
+    <table class='table table-striped table-hover'>
         <thead>
             <tr>
                 <th scope='col'>ID</th>

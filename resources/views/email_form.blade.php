@@ -1,6 +1,8 @@
 @extends('layouts.layout')
 @section('content')
-    <div>
+
+<div class="container">
+    <div class="card mt-5">
         <h1>パスワード再設定メール送信フォーム</h1>
         <form method="POST" action="{{ route('password_reset.email.send') }}">
             @csrf
@@ -12,10 +14,11 @@
                 @enderror
             </div>
             
-            <button>再設定用メールを送信</button>
+            <button class="btn btn-secondary">再設定用メールを送信</button>
             
         </form>
 
         <a href="{{ route('login') }}">戻る</a>
     </div>
+</div>
 @endsection
