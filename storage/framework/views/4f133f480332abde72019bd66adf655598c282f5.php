@@ -1,0 +1,1 @@
+Hello World<?php /**PATH C:\MAMP\htdocs\MakeResult\resources\views/Hello.blade.php ENDPATH**/ ?>
