@@ -31,24 +31,24 @@ class RecordController extends Controller
         $recording = new Record;
 
         $user = Auth::user()->id;
-        var_dump($user);
+        //var_dump($user);
 
         $role = new User;
         $token = $role->where('id',$user)->get()->toArray();
-        var_dump($token[0]);
+        //var_dump($token[0]);
         
         if($token[0]['role']==1){
         $allrecording = $recording->where('records.user_id',$user)
         ->join('players','records.player_id','players.playerid')
         ->join('places','records.place_id','places.placeid')
         ->join('events','records.event_id','events.eventid')
-        ->join('tournaments','records.tournament_id','tournaments.tourid')->paginate(10);
+        ->join('tournaments','records.tournament_id','tournaments.tourid')->paginate(20);
         }else{
             $allrecording = $recording->where('del_flg','0')->where('records.user_id',$user)
             ->join('players','records.player_id','players.playerid')
             ->join('places','records.place_id','places.placeid')
             ->join('events','records.event_id','events.eventid')
-            ->join('tournaments','records.tournament_id','tournaments.tourid')->paginate(10);
+            ->join('tournaments','records.tournament_id','tournaments.tourid')->paginate(20);
         }
 
         //管理者は論理しても表示させたい（よてい）
@@ -123,7 +123,8 @@ class RecordController extends Controller
         $player = Player::where('playerid',$record['player_id'])->get()->toArray();
         //var_dump($player);
         $place = Place::where('placeid',$record['place_id'])->get()->toArray();
-        var_dump($place);
+        //var_dump($place[0]['lat']);
+        //var_dump($place[0]['lng']);
         $tournament = Tournament::where('tourid',$record['tournament_id'])->get()->toArray();
         //var_dump($tournament);
         $event = Event::where('eventid',$record['event_id'])->get()->toArray();
@@ -160,7 +161,7 @@ class RecordController extends Controller
         $eventrname = Event::get()->toarray();
         $tourname = Tournament::get()->toarray();
 
-        var_dump($record);
+        //var_dump($record);
         //var_dump($playername);
         // var_dump($user);
 

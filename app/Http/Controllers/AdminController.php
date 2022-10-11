@@ -78,7 +78,7 @@ class AdminController extends Controller
         //$tournament = new Tournament;
         $tournament = Tournament::where('tourid',$id)->get()->toArray();
         
-        var_dump($tournament[0]);
+        //var_dump($tournament[0]);
 
         return view('TournameUpdate',[
             'tour' => $tournament
@@ -176,9 +176,18 @@ class AdminController extends Controller
         }
         $data = $query->paginate(10);
         //var_dump($data);
+        //var_dump($search);
+
+        if($search == NULL){
+            $message = "検索結果はありません";
+        }else{
+            $message = "「". $search."」を含む名前の検索が完了しました。";
+        }
 
         return view('serchUser',[
-            'datas' => $data
+            'datas' => $data,
+            'message' => $message,
+            'search' => $search,
         ]);
     }
 

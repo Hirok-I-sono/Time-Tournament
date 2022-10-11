@@ -31,7 +31,7 @@ class UpdateController extends Controller
         $tourname = Tournament::get()->toarray();
 
         //var_dump($record);
-        var_dump($user);
+        //var_dump($user);
 
         return view('Update',[
             'players' => $playername,
