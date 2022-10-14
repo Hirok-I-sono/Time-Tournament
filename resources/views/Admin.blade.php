@@ -13,6 +13,9 @@
     <a href="{{route ('event.admin')}}"> 
         <button type="button" class="btn btn-secondary btn-lg">種目編集</button>
     </a>
+    <a href="{{route ('place.admin')}}"> 
+        <button type="button" class="btn btn-secondary btn-lg">場所編集</button>
+    </a>
     </div>
     
 
