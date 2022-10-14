@@ -84,10 +84,13 @@ Route::get('/deletebackup/{record}',[UpdateController::class,'Backup'])->name('b
 Route::get('/admin',[AdminController::class,'Admin'])->name('admin');
 Route::get('/admin/tour',[AdminController::class,'TourAdmin'])->name('tour.admin');
 Route::get('/admin/event',[AdminController::class,'EventAdmin'])->name('event.admin');
+Route::get('/admin/place',[AdminController::class,'PlaceAdmin'])->name('place.admin');
 Route::get('/admin/rolein/{id}',[AdminController::class,'RoleIn'])->name('role.in');
 Route::get('/admin/roleout/{id}',[AdminController::class,'RoleOut'])->name('role.out');
 Route::get('/admin/violatein/{id}',[AdminController::class,'ViolationIn'])->name('violate.in');
 Route::get('/admin/violateout/{id}',[AdminController::class,'ViolationOut'])->name('violate.out');
+//ジオコーディング
+Route::get('/gio',[AdminController::class,'Giocoding'])->name('giocording');
 //ユーザー編集
 Route::get('/admin/data/{user}',[AdminController::class,'AdminDataEdit'])->name('admin.data.edit');
 Route::post('/admin/data/{user}',[AdminController::class,'AdminDataPost']);
@@ -97,10 +100,14 @@ Route::post('/admin/tourdata/{id}',[AdminController::class,'TourPost']);
 //種目編集
 Route::get('/admin/eventdata/{id}',[AdminController::class,'EventEdit'])->name('admin.event.edit');
 Route::post('/admin/eventdata/{id}',[AdminController::class,'EventPost']);
+//場所編集
+Route::get('/admin/placedata/{id}',[AdminController::class,'PlaceEdit'])->name('admin.place.edit');
+Route::post('/admin/placedata/{id}',[AdminController::class,'PlacePost']);
 //削除
 Route::get('/userdelete/{user}',[AdminController::class,'UserDelete'])->name('user.delete');
-Route::get('/tourelete/{id}',[AdminController::class,'TourDelete'])->name('tour.delete');
-Route::get('/eventelete/{id}',[AdminController::class,'EventDelete'])->name('event.delete');
+Route::get('/tourdelete/{id}',[AdminController::class,'TourDelete'])->name('tour.delete');
+Route::get('/eventdelete/{id}',[AdminController::class,'EventDelete'])->name('event.delete');
+Route::get('/placedelete/{id}',[AdminController::class,'PlaceDelete'])->name('place.delete');
 
 //リソースコントローラー
 Route::resource('/', 'RecordController');
