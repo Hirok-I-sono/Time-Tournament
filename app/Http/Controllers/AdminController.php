@@ -72,6 +72,18 @@ class AdminController extends Controller
         ]);
     }
 
+    //場所編集ページトップ
+    public function PlaceAdmin(){
+
+        $pla = new Place;
+        $place = $pla->get()->toArray();
+        //var_dump($event);
+
+        return view('PlaceEdit',[
+            'places' => $place
+        ]);
+    }
+
     //大会名編集入力ページ
     public function TourEdit(int $id){//tournamentsテーブルのid番号のカラムは'tourid'なのでfindは使えない
 
@@ -138,6 +150,37 @@ class AdminController extends Controller
         ]);
 
         return redirect('/admin/event');
+    }
+
+    //場所編集ページ
+    public function PlaceEdit(int $id){
+
+        $place = Place::where('placeid',$id)->get()->toArray();
+
+        return view('PlaceUpdate',[
+            'place' => $place
+        ]);
+    }
+
+    public function PlacePost(int $id,Request $request){
+        $instance = new Place;
+        $place = $instance->where('placeid',$id)->first();
+        
+        $place['placeid'] = $id;
+        $place['placename'] = $request['placename'];
+        $place['lat'] = $request['lat'];
+        $place['lng'] = $request['lng'];
+
+        var_dump($place['lat']);
+        
+        $place->update([
+            'placeid' => $place['placeid'],
+            'placename' => $place['placename'],
+            'lat' => $place['lat'],
+            'lng' => $place['lng'],
+        ]);
+
+        return redirect('/admin/place');
     }
 
     //削除
